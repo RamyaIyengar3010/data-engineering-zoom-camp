@@ -1,0 +1,9 @@
+import pandas as pd
+
+green_taxi_trips = 'https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2025-11.parquet'
+
+taxi_zones = 'https://github.com/DataTalksClub/nyc-tlc-data/releases/download/misc/taxi_zone_lookup.csv'
+
+taxi_zones_data = pd.read_csv(taxi_zones)
+
+green_taxi_trip_data = pd.read_parquet(green_taxi_trips)
