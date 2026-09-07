@@ -1,7 +1,7 @@
 import pandas as pd
 from tqdm.auto import tqdm
 from sqlalchemy import create_engine
-engine = create_engine('postgresql+psycopg://root:root@localhost:5433/ny_taxi')
+engine = create_engine('postgresql+psycopg://postgres:postgres@postgres:5433/ny_taxi')
 
 
 green_taxi_trips = 'https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2025-11.parquet'
@@ -33,10 +33,7 @@ parse_dates = [
 ]
 
 green_taxi_trips_data = pd.read_parquet(
-    green_taxi_trips,
-    dtype=dtype,
-    parse_dates=parse_dates,
-    nrows=10
+    green_taxi_trips
 )
 
 taxi_zones_data = pd.read_csv(taxi_zones)
