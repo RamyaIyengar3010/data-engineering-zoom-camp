@@ -1,8 +1,7 @@
 import pandas as pd
 from tqdm.auto import tqdm
 from sqlalchemy import create_engine
-engine = create_engine('postgresql+psycopg://postgres:postgres@postgres:5433/ny_taxi')
-
+engine = create_engine('postgresql+psycopg://postgres:postgres@localhost:5433/ny_taxi')
 
 green_taxi_trips = 'https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2025-11.parquet'
 
@@ -39,13 +38,4 @@ green_taxi_trips_data = pd.read_parquet(
 taxi_zones_data = pd.read_csv(taxi_zones)
 taxi_zones_data.to_sql(name='taxi_zones_data', con=engine, if_exists='replace')
 
-first = True
-
-for df_chunk in tqdm(df_iter):
-# for df_chunk in df_iter:
-    if first:
-        df.head(n=0).to_sql(name='green_taxi_trips_data', con=engine, if_exists='replace')
-        first = False
-        print('Table created')
-    df_chunk.to_sql(name='green_taxi_trips_data', con=engine, if_exists='append')
-    print('Inserted: ', len(df_chunk))
+green_taxi_trips_data.to_sql(name='green_taxi_trips_data', con=engine, if_exists='replace') 
