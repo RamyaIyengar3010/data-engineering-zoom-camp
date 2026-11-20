@@ -8,14 +8,15 @@ terraform {
 }
 
 provider "google" {
-  project = "future-lane-514608-g3"
-  region  = "us-central1"
+  credentials = file(var.credentials)
+  project = var.project
+  region  = var.region
 }
 
 
 resource "google_storage_bucket" "demo-gcs-bucket" {
-  name          = "future-lane-514608-g3-demo-gcs-bucket"
-  location      = "US"
+  name          = var.gcs_bucket_name
+  location      = var.location
   force_destroy = true
 
   lifecycle_rule {
@@ -26,4 +27,9 @@ resource "google_storage_bucket" "demo-gcs-bucket" {
       type = "AbortIncompleteMultipartUpload"
     }
   }
+}
+
+resource "google_bigquery_dataset" "demo-bq-dataset" {
+  dataset_id = var.bq_dataset_name
+  location   = var.location
 }
